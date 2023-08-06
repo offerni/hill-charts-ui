@@ -80,8 +80,8 @@ export default function Home() {
   const mockSquad = mockData.data[0].squad[0];
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="w-[60rem] h-[15rem] relative">
+    <main className="flex min-h-screen h-full flex-col items-center justify-center">
+      <div className="w-full h-3/4 max-w-[60rem] max-h-[10rem] relative">
         {drawLine()}
         <div className="h-full border-gray-400 border-l border-dashed absolute left-1/2"></div>
         <div className="w-full border-gray-500 border-t absolute bottom-0 text-center text-sm uppercase text-gray-600">
