@@ -1,16 +1,5 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import { FirestoreAdapter } from "@auth/firebase-adapter";
+import { authOptions } from "./_options";
 
-const handler = NextAuth({
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-    }),
-  ],
-  // @ts-ignore
-  adapter: FirestoreAdapter(),
-});
+const handler = authOptions;
 
 export { handler as GET, handler as POST };
