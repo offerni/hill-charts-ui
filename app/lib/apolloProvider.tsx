@@ -10,7 +10,7 @@ import {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: "https://main--time-pav6zq.apollographos.net/graphql",
+    uri: process.env.GRAPHQL_URI,
   });
 
   return new NextSSRApolloClient({

@@ -6,8 +6,10 @@ function calculateAxisPosition(progress: number) {
   return { x: xPercent, y: yPercent };
 }
 
-function addScopes(scopes: { progress: number; colour: string }[]) {
-  return scopes.map(({ progress, colour }) => {
+function addScopes(
+  scopes: { progress: number; colour: string; name: string }[]
+) {
+  return scopes.map(({ progress, colour, name }) => {
     const style: HTMLAttributes<HTMLDivElement>["style"] = {};
 
     const { x, y } = calculateAxisPosition(progress);
@@ -17,16 +19,16 @@ function addScopes(scopes: { progress: number; colour: string }[]) {
     return (
       <div
         key={colour}
-        className="absolute rounded-full p-1 border border-black"
+        className="absolute flex gap-1"
         style={{
-          width: "30px",
-          height: "30px",
-          background: colour,
-          color: "white",
           ...style,
         }}
       >
-        {progress}
+        <div
+          style={{ width: "20px", height: "20px", background: colour }}
+          className="rounded-full p-1 border border-black"
+        />
+        <span className="text-xs">{name}</span>
       </div>
     );
   });
@@ -41,7 +43,7 @@ function drawLine() {
     style.bottom = `${y}%`;
 
     dots.push(
-      <span key={i} className="absolute" style={{ ...style }}>
+      <span key={i} className="absolute text-gray-300" style={{ ...style }}>
         .
       </span>
     );

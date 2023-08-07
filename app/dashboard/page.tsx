@@ -1,37 +1,35 @@
-import stringToColor from "string-to-color";
-import { Chart } from "../components/chart";
+import { getClient } from "../lib/apolloClient";
+import { gql } from "@apollo/client";
+import { Squads } from "./Squads";
 
-const mockScopes: { colour: string; name: string; progress: number }[] = [];
+const query = gql`
+  query Squads {
+    Squads {
+      has_more
+      total_count
+      data {
+        created_at
+        current_cycle_name
+        id
+        modified_at
+        name
+        scope {
+          colour
+          created_at
+          id
+          modified_at
+          name
+          progress
+          squad_id
+        }
+      }
+    }
+  }
+`;
 
-for (let i = 0; i <= 100; i = i + 30) {
-  mockScopes.push({
-    colour: stringToColor(`scope$-${i}`),
-    name: "Some unrealistic new feature",
-    progress: i,
-  });
-}
+export default async function Dashboard() {
+  const client = getClient();
+  const { data } = await client.query({ query });
 
-const mockData = {
-  data: [
-    {
-      squad: [
-        {
-          name: "Squad A",
-          scopes: mockScopes,
-        },
-      ],
-    },
-  ],
-  has_more: false,
-  total_count: 2,
-};
-
-export default function Dashboard() {
-  const mockSquad = mockData.data[0].squad[0];
-
-  return (
-    <div>
-      <Chart scopes={mockSquad.scopes} />
-    </div>
-  );
+  return <Squads squads={data.Squads.data} />;
 }
